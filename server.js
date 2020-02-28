@@ -42,8 +42,10 @@ app.use(express.json())
 const itemsController = require('./controllers/api/Items.js')
 app.use('/items', itemsController)
 
+
+
 //-----------------------------------
-// PRODUCTION
+// PRODUCTION DEPLOYMENT
 //-----------------------------------
 
 // Serve static assets if in production
