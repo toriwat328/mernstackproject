@@ -42,6 +42,12 @@ app.use(express.json())
 const itemsController = require('./controllers/api/Items.js')
 app.use('/items', itemsController)
 
+const usersController = require('./controllers/api/Users.js')
+app.use('/users', usersController)
+
+const authController = require('./controllers/api/Auth.js')
+app.use('/auth', authController)
+
 
 
 //-----------------------------------
