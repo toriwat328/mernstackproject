@@ -4,7 +4,7 @@ import{
     Modal,
     ModalHeader,
     ModalBody,
-    From,
+    Form,
     FormGroup,
     Label,
     Input
@@ -28,8 +28,22 @@ class ItemModal extends Component {
         this.setState({ [e.target.name]: e.target.value });
     }
 
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        const newItem = {
+            name: this.state.name
+        }
+
+        // Add item via addItem action
+        this.props.addItem(newItem);
+
+        //Close Modal
+        this.toggle();
+    }
+
     render(){
-        return {
+        return (
             <div>
                 <Button
                 color="dark"
@@ -39,8 +53,7 @@ class ItemModal extends Component {
 
                 <Modal
                     isOpen={this.state.modal}
-                    toggle={this.toggle}
-                >
+                    toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>Add To Shopping List</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.onSubmit}>
@@ -54,14 +67,23 @@ class ItemModal extends Component {
                                     onChange={this.onChange}
 
                                 />
-
+                                <Button
+                                    color="dark"
+                                    style={{marginTop: '2rem'}}
+                                    block
+                                >Add Item</Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>
                 </Modal>
             </div>
-        }
+        );
+
     }
 }
 
-export default connect()(ItemModal);
+const mapStateToProps = (state) => ({
+    item: state.item
+});
+
+export default connect(mapStateToProps, { addItem })(ItemModal);
