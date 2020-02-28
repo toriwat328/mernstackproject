@@ -4,7 +4,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({ path: 'ENV_FILENAME' });
 const path = require('path');
 const db = mongoose.connection;
 const app = express();
