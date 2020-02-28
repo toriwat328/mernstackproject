@@ -4,7 +4,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config({ path: 'ENV_FILENAME' });
+require('dotenv').config();
 const path = require('path');
 const db = mongoose.connection;
 const app = express();
@@ -23,7 +23,7 @@ const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 
-mongoose.connect(MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true})
+mongoose.connect(MONGODB_URI.toString(), {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true})
 .then(() => console.log('MongoDB Connected...'))
 .catch(err => console.log(err))
 
@@ -41,6 +41,10 @@ app.use(express.json())
 
 const itemsController = require('./controllers/api/Items.js')
 app.use('/items', itemsController)
+
+//-----------------------------------
+// PRODUCTION
+//-----------------------------------
 
 // Serve static assets if in production
 if(process.env.NODE_ENV === 'production'){
