@@ -22,13 +22,73 @@ export const loadUser = () => (dispatch, getState) => {
             tyep: USER_LOADED,
             payload: res.data
         }))
-        .catch(error => {
-            dispatch(returnErrors(error.response.data, error.response.status));
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status));
             dispatch({
                 type: AUTH_ERROR
-            })
+            });
+        });
+};
+
+// Register User
+export const register = ({ name, email, password }) => dispatch => {
+    //Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //Request body
+    const body = JSON.stringify({ name, email, password });
+
+    axios.post('/users', body, config)
+        .then(res => dispatch({
+            type: REGISTER_SUCCESS,
+            payload: res.data
         })
-}
+    )
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
+            dispatch({
+                type: REGISTER_FAIL
+            });
+        });
+};
+
+//Login User
+export const login = ({ email, password }) => dispatch => {
+    //Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //Request body
+    const body = JSON.stringify({ email, password });
+
+    axios.post('/auth', body, config)
+        .then(res => dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data
+        })
+    )
+        .catch(err => {
+            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+            dispatch({
+                type: LOGIN_FAIL
+            });
+        });
+};
+
+ //Logout User
+export const logout = () => {
+    return {
+        type: LOGOUT_SUCCESS
+    };
+};
+
 
 //Setup config/headers and Token
 
@@ -49,4 +109,4 @@ export const tokenConfig = getState => {
     }
 
     return config;
-}
+};
