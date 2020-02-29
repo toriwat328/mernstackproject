@@ -2,7 +2,7 @@ import axios from 'axios';
 import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from './types';
 
 export const getItems = () =>  dispatch => {
-    dispatch(setItemsLoading);
+    dispatch({ type: ITEMS_LOADING });
     axios
         .get('/items')
         .then(res => dispatch({
@@ -31,8 +31,8 @@ export const deleteItem = (id) => dispatch => {
 
 
 
-export const setItemsLoading = () => {
-    return {
-        type: ITEMS_LOADING
-    }
-}
+// export const setItemsLoading = () => {
+//     return {
+//         type: ITEMS_LOADING
+//     }
+// }
